@@ -16,56 +16,16 @@ workflows:
             - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
             - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
 
-        dependencies:
-            flutter:
-                sdk: flutter
+        - name: Build iOS unsigned   # for building iOS (.app)
+        script: |
+                flutter build ios --debug --no-codesign
+        - name: Build iOS signed   # for building iOS (.ipa)
+        script: |
+            xcode-project use-profiles
+            xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner
+        publishing:
+            email:                # For publishing to an email
+                recipients:
+                - baig.afnan18@gmail.com
 
-
-            # The following adds the Cupertino Icons font to your application.
-            # Use with the CupertinoIcons class for iOS style icons.
-            cupertino_icons: ^1.0.0
-            share: ^0.6.5+4
-            path_provider: ^1.6.27
-            permission_handler: ^5.0.1+1
-            percent_indicator: ^2.1.9
-            flutter_gradient_colors: ^1.0.0
-            device_simulator: ^0.9.6
-            
-            animated_splash_screen: ^1.0.1+2
-            random_string: ^2.1.0
-            
-            firebase_storage: ^7.0.0
-            firebase_core: ^0.7.0
-            cached_network_image: ^2.5.0
-            firebase_database: ^6.0.0
-            device_preview: ^0.5.5
-            flutter_cache_manager: ^2.1.1
-            shared_preferences: ^0.5.12+4
-            basic_utils: ^1.2.0
-            
-            http: ^0.12.2
-            archive: ^2.0.13
-
-        dev_dependencies:
-            flutter_launcher_icons: "^0.8.0"
-            flutter_test:
-                sdk: flutter
-
-            # For information on the generic Dart part of this file, see the
-            # following page: https://dart.dev/tools/pub/pubspec
-
-            # The following section is specific to Flutter.
-        flutter_icons:
-            image_path: 'images/quiz_icon.png'
-            android: true
-            ios: true
-        flutter:
-
-            # The following line ensures that the Material Icons font is
-            # included with your application, so that you can use the icons in
-            # the material Icons class.
-            uses-material-design: true
-
-            # To add assets to your application, add an assets section, like this:
-            assets:
-                - images/
+        
