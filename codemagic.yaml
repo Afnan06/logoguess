@@ -15,14 +15,6 @@ workflows:
         artifacts:
             - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
             - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
-
-        - name: Build iOS unsigned   # for building iOS (.app)
-        script: |
-                flutter build ios --debug --no-codesign
-        - name: Build iOS signed   # for building iOS (.ipa)
-        script: |
-            xcode-project use-profiles
-            xcode-project build-ipa --workspace ios/Runner.xcworkspace --scheme Runner
         publishing:
             email:                # For publishing to an email
                 recipients:
